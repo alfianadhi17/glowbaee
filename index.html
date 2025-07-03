@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Produk - Glowbae</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+
+  <!-- Navbar -->
+<nav class="bg-white text-green-800 shadow-md sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-1 py-3 flex justify-between items-center">
+    <!-- Logo + Judul -->
+    <div class="flex items-center space-x-3">
+      <img src="images/logoG.JPG" alt="Logo Glowbae" style="height: 40px; width: auto;">
+      <span class="text-xl font-bold">Glowbae</span>
+    </div>
+
+    <!-- Menu -->
+    <div class="space-x-6">
+      <a href="produkpelanggan.html" class="font-semibold hover:underline">Produk</a>
+      <a href="tentang.html" class="font-medium hover:underline">Tentang Kami</a>
+    </div>
+  </div>
+</nav>
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-r from-green-100 to-emerald-100 py-16">
+    <div class="max-w-3xl mx-auto text-center">
+      <h1 class="text-4xl font-bold text-green-800 mb-4">Selamat Datang di Glowbae</h1>
+      <p class="text-gray-700 text-lg">Glow it your way!</p>
+    </div>
+  </section>
+
+  <!-- Produk Section -->
+  <section class="py-12 px-6 bg-white">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-2xl font-bold text-green-800 mb-6 text-center">Produk Kami</h2>
+      <div id="produkContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <!-- Kartu produk dimuat dari JS -->
+      </div>
+    </div>
+  </section>
+
+<!-- Tentang Kami Section -->
+  <main class="py-16 px-6">
+    <div class="max-w-3xl mx-auto text-center bg-white rounded-lg shadow-lg p-8 transition transform hover:-translate-y-1 hover:shadow-xl">
+      <h1 class="text-3xl font-bold mb-4 text-green-800">Tentang Glowbae</h1>
+      <p class="text-gray-600 mb-4 text-justify">
+        <strong>Glowbae</strong> adalah platform penjualan skincare yang menghadirkan beragam produk perawatan kulit dari berbagai brand terpercaya di Indonesia. Kami hadir untuk memudahkan konsumen menemukan produk skincare yang sesuai dengan kebutuhan mereka, dengan proses belanja yang mudah, aman, dan menyenangkan.
+      </p>
+      <p class="text-gray-600 mb-4 text-justify">
+        Melalui Glowbae, kamu bisa menjelajahi berbagai kategori produk mulai dari facial wash, toner, serum, moisturizer, hingga sunscreen. Kami bekerja sama langsung dengan produsen dan distributor resmi untuk menjamin keaslian dan kualitas setiap produk yang tersedia.
+      </p>
+      <p class="text-gray-600 text-justify">
+        Kami percaya bahwa setiap orang berhak mendapatkan akses ke produk skincare yang tepat. Karena itu, Glowbae berkomitmen menjadi jembatan antara konsumen dan brand, serta terus meningkatkan layanan demi pengalaman belanja yang lebih personal dan memuaskan. Temukan kilau alami kulitmu bersama <strong>Glowbae</strong>.
+      </p>
+    </div>
+  </main>
+
+  <!-- Produk Section -->
+  <section class="py-12 px-6 bg-white bg-opacity-70">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-2xl font-bold text-green-800 mb-6 text-center">Produk Kami</h2>
+      <div id="produkContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <!-- Kartu produk akan dimuat di sini -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Script Fetch Produk -->
+  <script>
+    const API_URL = "https://crud-api-production-1baf.up.railway.app/api/products";
+
+    fetch(API_URL)
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById('produkContainer');
+        container.innerHTML = '';
+        data.forEach(p => {
+          container.innerHTML += `
+            <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition-transform transform hover:-translate-y-1 p-5 flex flex-col justify-between border border-emerald-100">
+              <img src="${p.gambar}" alt="${p.nama_produk}" class="h-44 w-full object-cover rounded mb-4 shadow-sm">
+              <div class="flex-1">
+                <h3 class="text-lg font-semibold text-green-800 mb-1 text-center">${p.nama_produk}</h3>
+                <p class="text-sm text-gray-500 mb-1 text-center">${p.kategori}</p>
+                <p class="text-xl font-bold text-emerald-600 mb-2 text-center">Rp${Number(p.harga).toLocaleString('id-ID')}</p>
+                <p class="text-sm text-gray-600 mb-1">Stok: ${p.stok}</p>
+                <p class="text-sm text-gray-600 mb-4">${p.detail}</p>
+              </div>
+              <a 
+                href="https://wa.me/6285774075852?text=Halo%20kak%2C%20saya%20ingin%20pesan%20produk%20*${encodeURIComponent(p.nama_produk)}*%20seharga%20Rp${Number(p.harga).toLocaleString('id-ID')}%0AJumlah:%201%0ANama:%20%0AAlamat:%20" 
+                target="_blank"
+                class="mt-auto bg-emerald-500 hover:bg-green-600 text-white text-sm font-semibold px-4 py-2 rounded-lg text-center shadow"
+              >
+                Beli
+              </a>
+            </div>
+          `;
+        });
+      })
+      .catch(err => console.error('Gagal memuat produk:', err));
+  </script>
+
+  <!-- Script Fetch Produk -->
+  <script>
+    const API_URL = "https://crud-api-production-1baf.up.railway.app/api/products";
+
+    fetch(API_URL)
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById('produkContainer');
+        container.innerHTML = '';
+        data.forEach(p => {
+          container.innerHTML += `
+            <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition-transform transform hover:-translate-y-1 p-5 flex flex-col justify-between border border-emerald-100">
+              <img src="${p.gambar}" alt="${p.nama_produk}" class="h-44 w-full object-cover rounded mb-4 shadow-sm">
+              <div class="flex-1">
+                <h3 class="text-lg font-semibold text-green-800 mb-1 text-center">${p.nama_produk}</h3>
+                <p class="text-sm text-gray-500 mb-1 text-center">${p.kategori}</p>
+                <p class="text-xl font-bold text-emerald-600 mb-2 text-center">Rp${Number(p.harga).toLocaleString('id-ID')}</p>
+                <p class="text-sm text-gray-600 mb-1">Stok: ${p.stok}</p>
+                <p class="text-sm text-gray-600 mb-4">${p.detail}</p>
+              </div>
+              <a href="https://wa.me/6285717556342?text=Halo%20kak%2C%20saya%20mau%20pesan%20produk%20*${encodeURIComponent(p.nama_produk)}*%20seharga%20Rp${Number(p.harga).toLocaleString('id-ID')}%0AJumlah:%201%0ANama:%20%0AAlamat:%20" 
+                target="_blank"
+                class="mt-auto bg-emerald-500 hover:bg-green-600 text-white text-sm font-semibold px-4 py-2 rounded-lg text-center shadow">
+                Beli
+              </a>
+            </div>
+          `;
+        });
+      })
+      .catch(err => console.error('Gagal load produk:', err));
+  </script>
+
+  <!-- Footer -->
+  <footer class="bg-white text-green-800 mt-12 border-t border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 py-8 flex flex-col md:flex-row justify-between items-center text-sm">
+      <p>&copy; 2025 Glowbae. All rights reserved.</p>
+      <div class="flex space-x-4 mt-4 md:mt-0">
+        <a href="#" class="hover:underline">Privasi</a>
+        <a href="#" class="hover:underline">Syarat & Ketentuan</a>
+        <a href="#" class="hover:underline">Kontak</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

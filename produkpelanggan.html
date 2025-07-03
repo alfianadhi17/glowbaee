@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Produk - Glowbae</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(to bottom, #def7ec, #e6fffa);
+    }
+  </style>
+</head>
+<body class="text-gray-800">
+
+  <!-- Navbar -->
+<nav class="bg-white text-green-800 shadow-md sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-1 py-3 flex justify-between items-center">
+    <!-- Logo + Judul -->
+    <div class="flex items-center space-x-3">
+      <img src="images/logoG.JPG" alt="Logo Glowbae" style="height: 40px; width: auto;">
+      <span class="text-xl font-bold">Glowbae</span>
+    </div>
+
+    <!-- Menu -->
+    <div class="space-x-6">
+      <a href="produkpelanggan.html" class="font-semibold hover:underline">Produk</a>
+      <a href="tentang.html" class="font-medium hover:underline">Tentang Kami</a>
+    </div>
+  </div>
+</nav>
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-r from-green-100 via-emerald-100 to-teal-50 py-16">
+    <div class="max-w-3xl mx-auto text-center">
+      <h1 class="text-4xl font-bold text-green-800 mb-4">Selamat Datang di Glowbae</h1>
+      <p class="text-gray-700 text-lg">Dapatkan kulit sehat alami dengan produk pilihan kami.</p>
+    </div>
+  </section>
+
+  <!-- Produk Section -->
+  <section class="py-12 px-6 bg-white bg-opacity-70">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-2xl font-bold text-green-800 mb-6 text-center">Produk Kami</h2>
+      <div id="produkContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <!-- Kartu produk akan dimuat di sini -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Script Fetch Produk -->
+  <script>
+    const API_URL = "https://crud-api-production-1baf.up.railway.app/api/products";
+
+    fetch(API_URL)
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById('produkContainer');
+        container.innerHTML = '';
+        data.forEach(p => {
+          container.innerHTML += `
+            <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition-transform transform hover:-translate-y-1 p-5 flex flex-col justify-between border border-emerald-100">
+              <img src="${p.gambar}" alt="${p.nama_produk}" class="h-44 w-full object-cover rounded mb-4 shadow-sm">
+              <div class="flex-1">
+                <h3 class="text-lg font-semibold text-green-800 mb-1 text-center">${p.nama_produk}</h3>
+                <p class="text-sm text-gray-500 mb-1 text-center">${p.kategori}</p>
+                <p class="text-xl font-bold text-emerald-600 mb-2 text-center">Rp${Number(p.harga).toLocaleString('id-ID')}</p>
+                <p class="text-sm text-gray-600 mb-1">Stok: ${p.stok}</p>
+                <p class="text-sm text-gray-600 mb-4">${p.detail}</p>
+              </div>
+              <a 
+                href="https://wa.me/6285717556342?text=Halo%20kak%2C%20saya%20ingin%20pesan%20produk%20*${encodeURIComponent(p.nama_produk)}*%20seharga%20Rp${Number(p.harga).toLocaleString('id-ID')}%0AJumlah:%201%0ANama:%20%0AAlamat:%20" 
+                target="_blank"
+                class="mt-auto bg-emerald-500 hover:bg-green-600 text-white text-sm font-semibold px-4 py-2 rounded-lg text-center shadow"
+              >
+                Beli
+              </a>
+            </div>
+          `;
+        });
+      })
+      .catch(err => console.error('Gagal memuat produk:', err));
+  </script>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t mt-12">
+    <div class="max-w-7xl mx-auto px-4 py-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-600">
+      <p>&copy; 2025 Glowbae. All rights reserved.</p>
+      <div class="flex space-x-4 mt-4 md:mt-0">
+        <a href="#" class="hover:text-emerald-600">Privasi</a>
+        <a href="#" class="hover:text-emerald-600">Syarat & Ketentuan</a>
+        <a href="#" class="hover:text-emerald-600">Kontak</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
